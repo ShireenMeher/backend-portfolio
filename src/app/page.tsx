@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { Easing, motion, MotionProps } from "framer-motion";
 import {
   Github,
   Linkedin,
@@ -29,6 +29,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../components/ui/dialog";
+
+const fadeUp: MotionProps = {
+  initial:  { opacity: 0, y: 12 },
+  animate:  { opacity: 1, y: 0 },
+  transition: { duration: 0.6, ease: [0.42, 0, 0.58, 1] }, // cubic-bezier
+};
+
 
 // ---- Edit these objects for your info ----
 const PROFILE = {
@@ -161,10 +168,10 @@ const PROJECTS: Project[] = [
 ];
 
 // ---- Small animation helpers ----
-const fadeUp = {
+const fadeUpAnimation = {
   initial: { opacity: 0, y: 12 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6, ease: "easeInOut" },
+  transition: { duration: 0.6, ease: [0.42, 0, 0.58, 1] }, // cubic-bezier easing
 };
 const springy = { type: "spring" as const, stiffness: 260, damping: 22 };
 
@@ -187,30 +194,32 @@ function Hero() {
     <section className="grid items-center gap-8 md:grid-cols-[1.25fr,1fr] md:gap-12">
       <div>
         <motion.h1
-          {...fadeUp}
+          initial={fadeUpAnimation.initial}
+          animate={fadeUpAnimation.animate}
+          transition={{ ...fadeUpAnimation.transition, ease: "easeInOut" }}
           className="text-4xl font-bold tracking-tight md:text-5xl"
         >
           {PROFILE.name}
         </motion.h1>
         <motion.p
-          {...fadeUp}
-          transition={{ ...fadeUp.transition, delay: 0.05, ease: [0.42, 0, 0.58, 1] as Easing }}
+          {...fadeUpAnimation}
+          transition={{ ...fadeUpAnimation.transition, delay: 0.05, ease: [0.42, 0, 0.58, 1] as Easing }}
           className="mt-2 text-lg text-muted-foreground"
         >
           {PROFILE.role}
         </motion.p>
 
         <motion.p
-          {...fadeUp}
-          transition={{ ...fadeUp.transition, delay: 0.1, ease: [0.42, 0, 0.58, 1] }}
+          {...fadeUpAnimation}
+          transition={{ ...fadeUpAnimation.transition, delay: 0.1, ease: [0.42, 0, 0.58, 1] }}
           className="mt-4 max-w-2xl text-base leading-relaxed"
         >
           {PROFILE.blurb}
         </motion.p>
 
         <motion.div
-          {...fadeUp}
-          transition={{ ...fadeUp.transition, delay: 0.15, ease: [0.42, 0, 0.58, 1] }}
+          {...fadeUpAnimation}
+          transition={{ ...fadeUpAnimation.transition, delay: 0.15, ease: [0.42, 0, 0.58, 1] }}
           className="mt-6 flex flex-wrap gap-3"
         >
           <Button asChild>
