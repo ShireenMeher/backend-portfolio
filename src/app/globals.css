@@ -120,3 +120,46 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* === Fancy background & utilities === */
+:root {
+  --blob-1: rgba(99, 102, 241, 0.25);   /* indigo */
+  --blob-2: rgba(16, 185, 129, 0.25);   /* emerald */
+  --blob-3: rgba(244, 63, 94, 0.25);    /* rose */
+}
+
+.bg-app {
+  background: radial-gradient(60rem 60rem at 10% -10%, var(--blob-1), transparent 60%),
+              radial-gradient(60rem 60rem at 110% 10%, var(--blob-2), transparent 60%),
+              radial-gradient(40rem 40rem at 50% 120%, var(--blob-3), transparent 60%);
+}
+
+.noise {
+  position: fixed;
+  pointer-events: none;
+  inset: 0; opacity: .08; mix-blend-mode: soft-light;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 300px 300px;
+}
+
+/* marquee (pure CSS) */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.marquee {
+  overflow: hidden; white-space: nowrap;
+}
+.marquee-track {
+  display: inline-flex; gap: 2rem; padding-left: 2rem;
+  animation: marquee 18s linear infinite;
+}
+
+/* glass */
+.glass {
+  @apply bg-white/60 dark:bg-black/30 backdrop-blur-md border border-white/20 dark:border-white/10;
+}
+
+/* subtle card shadow */
+.shadow-card { box-shadow: 0 8px 30px rgba(0,0,0,.06); }
+
